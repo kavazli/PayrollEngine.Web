@@ -1,0 +1,20 @@
+﻿@if (Visible)
+{
+    <div class="alert @CssClass alert-dismissible fade show" role="alert">
+        @Message
+        <button type="button" class="btn-close" @onclick="Hide"></button>
+    </div>
+}
+
+@code {
+    [Parameter] public bool Visible { get; set; }
+    [Parameter] public string Message { get; set; }
+    [Parameter] public string CssClass { get; set; } = "alert-danger";
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    void Hide()
+    {
+        Visible = false;
+        OnClose.InvokeAsync();
+    }
+}

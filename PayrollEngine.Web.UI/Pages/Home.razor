@@ -1,7 +1,271 @@
 ﻿@page "/"
+@using PayrollEngine.Web.Domain.Enums
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Payroll Engine</PageTitle>
 
-<h1>Hello, world!</h1>
 
-Welcome to your new app.
+
+
+<div class="payroll-page">
+    
+
+    <!-- ═══ SAYFA BAŞLIĞI ═══ -->
+    <div class="page-hero d-flex align-items-center justify-content-between mb-4">
+        <div class="d-flex align-items-center gap-3">
+            <div class="hero-icon-wrap">
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                    <path d="M4 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z" />
+                </svg>
+            </div>
+            <div>
+                <h2 class="hero-title mb-0">Payroll Engine</h2>
+                <p class="hero-sub mb-0">Çalışan senaryosunu ve aylık verileri girerek maaş hesaplaması yapın!</p>
+            </div>
+        </div>
+    </div>
+
+   
+
+    <!-- ═══ BÖLÜM 1: ÇALIŞAN SENARYOSU ═══ -->
+    <div class="pe-card mb-4">
+        <div class="pe-card-header scenario-bg">
+            <div class="d-flex align-items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M6.5 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                    <path d="M4.5 0A2.5 2.5 0 0 0 2 2.5V14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5A2.5 2.5 0 0 0 11.5 0zm0 1h7A1.5 1.5 0 0 1 13 2.5v.2a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.2A1.5 1.5 0 0 1 4.5 1M3 6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v7a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z" />
+                </svg>
+                <span class="fw-semibold">Çalışan Senaryosu</span>
+            </div>
+        </div>
+        <div class="pe-card-body">
+            <div class="row g-3 align-items-end">
+                <div class="col-12 col-sm-6 col-md-4 col-xl">
+                    <label class="field-label">Yıl</label>
+                    <select class="form-select pe-input" @bind="_year">
+                        <option value="2026">2026</option>
+                    </select>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 col-xl">
+                    <label class="field-label">Maaş Türü</label>
+                    <select class="form-select pe-input" @bind="_salaryType">
+                        <option value="Gross">Brüt</option>
+                        <option value="Net">Net</option>
+                    </select>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 col-xl">
+                    <label class="field-label">Sigortalı Statüsü</label>
+                    <select class="form-select pe-input" @bind="_status">
+                        <option value="Active">Aktif Sigortalı</option>
+                        <option value="Retired">Emekli</option>
+                    </select>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 col-xl">
+                    <label class="field-label">Engellilik Derecesi</label>
+                    <select class="form-select pe-input" @bind="_disabilityDegree">
+                        <option value="Normal">Yok</option>
+                        <option value="BirinciDerece">1. Derece</option>
+                        <option value="IkinciDerece">2. Derece</option>
+                        <option value="UcuncuDerece">3. Derece</option>
+                    </select>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 col-xl">
+                    <label class="field-label">Ücret Türü</label>
+                    <select class="form-select pe-input" @bind:get="_payType" @bind:set="UpdateWorkDays">
+                        <option value="Monthly">Aylık</option>
+                        <option value="Daily">Günlük</option>
+                    </select>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 col-xl">
+                    <label class="field-label">Sektör</label>
+                    <select class="form-select pe-input" @bind="_sector">
+                        <option value="Manufacturing">İmalat</option>
+                        <option value="Other">Diğer</option>
+                    </select>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 col-xl">
+                    <label class="field-label">Teşvik Türü</label>
+                    <select class="form-select pe-input" @bind="_incentiveType">
+                        <option value="None">Teşvik Yok</option>
+                        <option value="Code5510">5510 – SGK İşveren Teşviği</option>
+                        <option value="Code6111">6111 – İstihdam Teşviği</option>
+                        <option value="Code16322">16322 – Yatırım Teşviği</option>
+                        <option value="Code14857">14857 – Engelli Teşviği</option>
+                    </select>
+                </div>
+            </div>
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 p-3 border-top mt-3">
+                <span class="text-success" style="font-size:0.82rem">@_scenarioMessage</span>
+                <button class="btn btn-scenario px-4" @onclick="SaveScenario">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="me-2" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                        <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05" />
+                    </svg>
+                    Senaryoyu Kaydet
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <AlertBox Visible="ShowWarning" Message="@WarningMessage" CssClass="alert-danger" OnClose="() => ShowWarning = false" />
+
+
+    <!-- ═══ BÖLÜM 2: AYLIK MAAŞ BİLGİLERİ ═══ -->
+    
+    <div class="pe-card mb-4">
+        <div class="pe-card-header months-bg">
+            <div class="d-flex align-items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z" />
+                    <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
+                </svg>
+                <span class="fw-semibold">Aylık Maaş Bilgileri</span>
+            </div>
+        </div>
+        <div class="pe-card-body p-0">
+            <div class="table-responsive">
+                <table class="table months-table mb-0">
+                    <thead>
+                        <tr>
+                            <th class="text-end">Ay</th>
+                            <th class="text-end">Çalışma Günü</th>
+                            <th class="text-end">Maaş</th>
+                            <th class="text-end">Maaş Artış %</th>
+                            <th class="text-end">%50 Mesai</th>
+                            <th class="text-end">%100 Mesai</th>
+                            <th class="text-end">Prim/İkramiye</th>
+                            <th class="text-end">Alışveriş Çeki</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(int i = 0; i < _templateMonths.Count; i++)
+                        {
+                            int idx = i;
+                            <tr class="month-row">
+                                <td class="month-name-cell text-end">
+                                    <span class="month-pill">@MonthNames[_templateMonths[idx].Month]</span>
+                                </td>
+                                <td><input type="number" class="form-control form-control-sm month-input" @bind="_templateMonths[idx].WorkDays" /></td>
+                                <td><input type="number" class="form-control form-control-sm month-input" @bind:get="_templateMonths[idx].BaseSalary" @bind:set="async v => { _templateMonths[idx].BaseSalary = v; CopyDown(idx); await CheckSalary(idx); }" /></td>
+                                <td><input type="number" class="form-control form-control-sm month-input" @bind:get="_templateMonths[idx].SalaryIncreaseRate" @bind:set="v => { _templateMonths[idx].SalaryIncreaseRate = v; CopyDown(idx); }" /></td>
+                                <td><input type="number" class="form-control form-control-sm month-input" @bind:get="_templateMonths[idx].Overtime_50" @bind:set="v => { _templateMonths[idx].Overtime_50 = v; CopyDown(idx); }" /></td>
+                                <td><input type="number" class="form-control form-control-sm month-input" @bind:get="_templateMonths[idx].Overtime_100" @bind:set="v => { _templateMonths[idx].Overtime_100 = v; CopyDown(idx); }" /></td>
+                                <td><input type="number" class="form-control form-control-sm month-input" @bind:get="_templateMonths[idx].Bonus" @bind:set="v => { _templateMonths[idx].Bonus = v; CopyDown(idx); }" /></td>
+                                <td><input type="number" class="form-control form-control-sm month-input" @bind:get="_templateMonths[idx].ShoppingVoucher" @bind:set="v => { _templateMonths[idx].ShoppingVoucher = v; CopyDown(idx); }" /></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            
+            
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 p-3 border-top">
+                <span class="text-success" style="font-size:0.82rem">@_payrollMonthMessage</span>
+                <div class="d-flex flex-wrap gap-2">
+                    <button class="btn btn-months px-4" @onclick="ClearMonths">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="me-2" viewBox="0 0 16 16">
+                            <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
+                            <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z" />
+                        </svg>
+                        Temizle
+                    </button>
+                    <button class="btn btn-months px-4" @onclick="SaveMonths">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="me-2" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                            <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05" />
+                        </svg>
+                        Kaydet &amp; Hesapla
+                    </button>
+                </div>
+            </div>
+           </div>
+        </div>
+    </div>
+    
+
+
+
+
+    
+    <!-- ═══ BÖLÜM 3: BORDRO SONUÇLARI ═══ -->
+    <!--
+    <div class="pe-card">
+        <div class="pe-card-header results-bg">
+            <div class="d-flex align-items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M0 0h1v15h15v1H0zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07z" />
+                </svg>
+                <span class="fw-semibold">Bordro Sonuçları</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <a href="@ExportUrl" download="@($"bordro_sonuclari_{_year}.csv")" class="btn btn-outline-success btn-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="me-1" viewBox="0 0 16 16">
+                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
+                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z" />
+                    </svg>
+                    İndir
+                </a>
+            </div>
+        </div>
+        <div class="pe-card-body p-0">
+            <div class="table-responsive">
+                <table class="table result-table mb-0">
+                    <thead>
+                        <tr>
+                            <th class="col-ay">Ay</th>
+                            <th class="text-end col-money">Brüt Maaş ₺</th>
+                            <th class="text-end col-money">SGK Kesintisi ₺</th>
+                            <th class="text-end col-money">İşsizlik Kes. ₺</th>
+                            <th class="text-end col-money">Gelir Vergisi ₺</th>
+                            <th class="text-end col-money">Damga Vergisi ₺</th>
+                            <th class="text-end col-money">Toplam Kesinti ₺</th>
+                            <th class="text-end col-money col-net">Net Maaş ₺</th>
+                            <th class="text-end col-money">Efektif Vergi %</th>
+                            <th class="text-end col-money">İşveren SGK ₺</th>
+                            <th class="text-end col-money">İşveren İşsizlik ₺</th>
+                            <th class="text-end col-money">Toplam Maliyet ₺</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var r in _results)
+                        {
+                            <tr class="result-data-row">
+                                <td class="text-end"><span class="result-month-pill">@MonthNames[r.Month]</span></td>
+                                <td class="text-end val-net">@r.GrossSalary.ToString("N2")</td>
+                                <td class="text-end val-net">@r.SsiEmployeeDeduction.ToString("N2")</td>
+                                <td class="text-end val-net">@r.UnemploymentEmployeeDeduction.ToString("N2")</td>
+                                <td class="text-end val-net">@r.IncomeTax.ToString("N2")</td>
+                                <td class="text-end val-net">@r.StampTax.ToString("N2")</td>
+                                <td class="text-end val-net">@r.TotalDeductions.ToString("N2")</td>
+                                <td class="text-end val-net">@r.NetSalary.ToString("N2")</td>
+                                <td class="text-end val-neutral">@r.EffectiveTaxRate.ToString("P2")</td>
+                                @{ var ec = _employerContributions.FirstOrDefault(e => e.Month == r.Month); }
+                                <td class="text-end val-net">@(ec?.SsiEmployerShare.ToString("N2") ?? "—")</td>
+                                <td class="text-end val-net">@(ec?.UnemploymentEmployerShare.ToString("N2") ?? "—")</td>
+                                <td class="text-end val-net">@(ec?.TotalCost.ToString("N2") ?? "—")</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr class="result-total-row">
+                            <td><strong>TOPLAM</strong></td>
+                            <td class="text-end val-net"><strong>@_results.Sum(r => r.GrossSalary).ToString("N2")</strong></td>
+                            <td class="text-end val-net"><strong>@_results.Sum(r => r.SsiEmployeeDeduction).ToString("N2")</strong></td>
+                            <td class="text-end val-net"><strong>@_results.Sum(r => r.UnemploymentEmployeeDeduction).ToString("N2")</strong></td>
+                            <td class="text-end val-net"><strong>@_results.Sum(r => r.IncomeTax).ToString("N2")</strong></td>
+                            <td class="text-end val-net"><strong>@_results.Sum(r => r.StampTax).ToString("N2")</strong></td>
+                            <td class="text-end val-net"><strong>@_results.Sum(r => r.TotalDeductions).ToString("N2")</strong></td>
+                            <td class="text-end val-net"><strong>@_results.Sum(r => r.NetSalary).ToString("N2")</strong></td>
+                            <td class="text-end val-neutral">—</td>
+                            <td class="text-end val-net"><strong>@_employerContributions.Sum(e => e.SsiEmployerShare).ToString("N2")</strong></td>
+                            <td class="text-end val-net"><strong>@_employerContributions.Sum(e => e.UnemploymentEmployerShare).ToString("N2")</strong></td>
+                            <td class="text-end val-net"><strong>@_employerContributions.Sum(e => e.TotalCost).ToString("N2")</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+-->
+</div>
+

@@ -6,6 +6,8 @@
 
 main {
     flex: 1;
+    min-width: 0;
+    overflow-x: hidden;
 }
 
 .sidebar {
@@ -73,5 +75,10 @@ main {
     .top-row, article {
         padding-left: 2rem !important;
         padding-right: 1.5rem !important;
+    }
+
+    article {
+        min-width: 0;
+        overflow-x: hidden;
     }
 }
