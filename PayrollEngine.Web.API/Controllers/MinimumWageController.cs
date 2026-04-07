@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PayrollEngine.Web.Application.Services.Params;
 using PayrollEngine.Web.Domain.Entities;
 using PayrollEngine.Web.Domain.Interface;
 
@@ -9,10 +10,10 @@ namespace PayrollEngine.Web.API.Controllers
     [ApiController]
     public class MinimumWageController : ControllerBase
     {
-        private readonly IMinimumWageService _minimumWageService;
+        private readonly MinimumWageService _minimumWageService;
 
 
-        public MinimumWageController(IMinimumWageService minimumWageService)
+        public MinimumWageController( MinimumWageService minimumWageService)
         {
             _minimumWageService = minimumWageService ?? throw new ArgumentNullException(nameof(minimumWageService));
         }

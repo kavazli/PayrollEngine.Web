@@ -14,7 +14,12 @@ public static class DependencyInjection
     {
         services.AddScoped<IScenarioService, ScenarioService>();
         services.AddScoped<IPayrollMonthsService, PayrollMonthService>();
-        services.AddScoped<IMinimumWageService, MinimumWageService>();
+        services.AddScoped<MinimumWageService, MinimumWageService>();
+        services.AddScoped<DisabilityDegreeService, DisabilityDegreeService>();
+        services.AddScoped<IncomeTaxBracketService, IncomeTaxBracketService>();
+        services.AddScoped<SSCeilingService, SSCeilingService>();
+        services.AddScoped<SSParamsService, SSParamsService>();
+        services.AddScoped<StampTaxService, StampTaxService>();
 
         services.AddScoped<PayrollMonthNormalizer, PayrollMonthNormalizer>();
 

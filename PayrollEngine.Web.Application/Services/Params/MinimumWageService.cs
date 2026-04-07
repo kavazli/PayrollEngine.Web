@@ -1,20 +1,16 @@
 using System;
 using PayrollEngine.Web.Domain.Entities;
 using PayrollEngine.Web.Domain.Interface;
+using PayrollEngine.Web.Infrastructure.Providers.Params;
 
 namespace PayrollEngine.Web.Application.Services.Params;
 
-public class MinimumWageService : IMinimumWageService
+public class MinimumWageService 
 {   
-    private readonly IMinimumWageProvider _provider;
+    private readonly MinimumWageProvider _provider;
 
-    public MinimumWageService(IMinimumWageProvider provider)
+    public MinimumWageService(MinimumWageProvider provider)
     {  
-        if (provider == null)
-        {
-            throw new ArgumentNullException(nameof(provider));
-        }
-
         _provider = provider;
     }
 

@@ -6,7 +6,7 @@ using PayrollEngine.Web.Infrastructure.DataBase;
 
 namespace PayrollEngine.Web.Infrastructure.Providers.Params;
 
-public class MinimumWageProvider : IMinimumWageProvider
+public class MinimumWageProvider 
 {   
     private readonly AppDbContext _dbContext;
     
