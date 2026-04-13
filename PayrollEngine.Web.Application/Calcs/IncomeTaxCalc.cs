@@ -47,6 +47,11 @@ public class IncomeTaxCalc
     {   
         var brackets = await _incomeTaxBracketService.Get(year);
 
+        if (brackets == null || !brackets.Any())
+        {
+            throw new InvalidOperationException($"Vergi dilimleri {year} yılı için bulunamadı. Lütfen parametrik verileri yükleyin.");
+        }
+
         IncomeTaxBrackets incomeTaxBrackets = new IncomeTaxBrackets(brackets);
         return incomeTaxBrackets;
     }

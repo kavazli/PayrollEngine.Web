@@ -29,19 +29,20 @@ public static class DependencyInjection
         services.AddScoped<EmployeeSSContributionCalc>();
         services.AddScoped<EmployeeUIContributionCalc>();
         services.AddScoped<EmployerSSContributionCalc>();
-        services.AddScoped<EmployerUIContributionAmountCalc>();
+        services.AddScoped<EmployerUIContributionCalc>();
         services.AddScoped<IncomeTaxBaseCalc>();
         services.AddScoped<IncomeTaxCalc>();
         services.AddScoped<IncomeTaxExemptionCalc>();
         services.AddScoped<NetSalaryCalc>();
         services.AddScoped<ResultPayrollCalc>();
         services.AddScoped<SSContributionBaseCalc>();
-        services.AddScoped<ShoppingVoucherGrossCalc>();
-        services.AddScoped<ShoppingVoucherIncomeTaxCalc>();
-        services.AddScoped<ShoppingVoucherStampTaxCalc>();
+        services.AddScoped<ShoppingVoucherCalc>();
+    
         services.AddScoped<StampTaxCalc>();
         services.AddScoped<StampTaxExemptionCalc>();
         services.AddScoped<TotalEmployerCostCalc>();
+
+        services.AddScoped<WorkFlow>();
 
         services.AddInfrastructure(configuration);
 

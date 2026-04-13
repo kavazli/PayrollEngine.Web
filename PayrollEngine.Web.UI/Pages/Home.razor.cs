@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Components;
 using PayrollEngine.Web.Domain.Entities;
 using PayrollEngine.Web.Domain.Enums;
 
+
 namespace PayrollEngine.Web.UI.Pages;
 
-public partial class Home
+public partial class Home : ComponentBase
 {
     [Inject]
     public HttpClient Http { get; set; } = null!;
@@ -128,6 +129,36 @@ public partial class Home
         {
             _payrollMonthMessage = $"Aylık veriler kaydedilirken hata oluştu: {response.ReasonPhrase}";
         }
+
+
+        var Delete2 = await Http.DeleteAsync("api/resultpayroll");
+        if (!Delete2.IsSuccessStatusCode)
+        {
+            _payrollMonthMessage = $"Maaş hesaplamaları silinirken hata oluştu: {Delete2.ReasonPhrase}";
+            return;
+        }
+
+        var response2 = await Http.PostAsync("api/resultpayroll", null);
+
+        if (!response2.IsSuccessStatusCode)
+        {
+            var errorContent = await response2.Content.ReadAsStringAsync();
+            _payrollMonthMessage = $"Maaş hesaplamaları yapılırken hata oluştu: {errorContent}";
+            StateHasChanged();
+            await Task.Delay(3000);
+            _payrollMonthMessage = string.Empty;
+            StateHasChanged();
+            return;
+        }
+
+        _payrollMonthMessage = "Maaş hesaplamaları başarıyla tamamlandı!";
+        StateHasChanged();
+        await Task.Delay(3000);
+        _payrollMonthMessage = string.Empty;
+        StateHasChanged();
+
+
+
     }
 
     private async Task ClearMonths()

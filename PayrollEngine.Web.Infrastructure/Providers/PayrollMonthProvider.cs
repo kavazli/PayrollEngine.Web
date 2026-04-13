@@ -44,7 +44,7 @@ public class PayrollMonthProvider : IPayrollMonthsProvider
 
     public async Task<List<PayrollMonth>> Get()
     {
-        var result = await _dbContext.PayrollMonths.ToListAsync();
+        var result = await _dbContext.PayrollMonths.OrderBy(m => m.Month).ToListAsync();
         
         return result;
     }

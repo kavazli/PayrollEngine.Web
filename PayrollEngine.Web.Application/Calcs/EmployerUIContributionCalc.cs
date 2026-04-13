@@ -3,19 +3,19 @@ using PayrollEngine.Web.Application.Services.Params;
 
 namespace PayrollEngine.Web.Application.Calcs;
 
-public class EmployerUIContributionAmountCalc
+public class EmployerUIContributionCalc
 {
     private readonly SSParamsService _ssParamsService;
 
-    public EmployerUIContributionAmountCalc(SSParamsService sSParamsService)
+    public EmployerUIContributionCalc(SSParamsService sSParamsService)
     {
         _ssParamsService = sSParamsService;
     }
 
-    public async Task<decimal> Calc(int year, decimal GrossSalary)
+    public async Task<decimal> Calc(int year, decimal ssContributionBase)
     {
         var ssParams = await _ssParamsService.Get(year);
-        decimal result = GrossSalary * ssParams.ActiveEmployerUIRate;
+        decimal result = ssContributionBase * ssParams.ActiveEmployerUIRate;
         return Math.Round(result, 2);    
        
     }
