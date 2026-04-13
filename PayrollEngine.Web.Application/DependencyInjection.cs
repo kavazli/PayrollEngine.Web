@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PayrollEngine.Web.Application.Calcs;
 using PayrollEngine.Web.Application.Normalizers;
 using PayrollEngine.Web.Application.Services;
 using PayrollEngine.Web.Application.Services.Params;
@@ -14,6 +15,7 @@ public static class DependencyInjection
     {
         services.AddScoped<IScenarioService, ScenarioService>();
         services.AddScoped<IPayrollMonthsService, PayrollMonthService>();
+        services.AddScoped<IResultPayrollService, ResultPayrollService>();
         services.AddScoped<MinimumWageService, MinimumWageService>();
         services.AddScoped<DisabilityDegreeService, DisabilityDegreeService>();
         services.AddScoped<IncomeTaxBracketService, IncomeTaxBracketService>();
@@ -23,7 +25,23 @@ public static class DependencyInjection
 
         services.AddScoped<PayrollMonthNormalizer, PayrollMonthNormalizer>();
 
-
+        services.AddScoped<CumulativeIncomeTaxBaseCalc>();
+        services.AddScoped<EmployeeSSContributionCalc>();
+        services.AddScoped<EmployeeUIContributionCalc>();
+        services.AddScoped<EmployerSSContributionCalc>();
+        services.AddScoped<EmployerUIContributionAmountCalc>();
+        services.AddScoped<IncomeTaxBaseCalc>();
+        services.AddScoped<IncomeTaxCalc>();
+        services.AddScoped<IncomeTaxExemptionCalc>();
+        services.AddScoped<NetSalaryCalc>();
+        services.AddScoped<ResultPayrollCalc>();
+        services.AddScoped<SSContributionBaseCalc>();
+        services.AddScoped<ShoppingVoucherGrossCalc>();
+        services.AddScoped<ShoppingVoucherIncomeTaxCalc>();
+        services.AddScoped<ShoppingVoucherStampTaxCalc>();
+        services.AddScoped<StampTaxCalc>();
+        services.AddScoped<StampTaxExemptionCalc>();
+        services.AddScoped<TotalEmployerCostCalc>();
 
         services.AddInfrastructure(configuration);
 

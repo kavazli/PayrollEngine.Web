@@ -10,6 +10,7 @@ public interface IResultPayrollProvider
     public Task<ResultPayroll> GetMonth(Months months);
     public Task<ResultPayroll> Add(ResultPayroll resultPayroll);
     public Task<List<ResultPayroll>> AddRange(List<ResultPayroll> resultPayrolls);
+    public Task<ResultPayroll> Update(ResultPayroll resultPayroll);
     public Task Delete();
 
 }

@@ -37,10 +37,13 @@ public class ResultPayrollService : IResultPayrollService
         return await _provider.Get();
     }
 
-    public Task<ResultPayroll> GetMonth(Months months)
+    public async Task<ResultPayroll> GetMonth(Months months)
     {
-        return _provider.GetMonth(months);
+        return await _provider.GetMonth(months);
     }
 
-   
+   public async Task<ResultPayroll> Update(ResultPayroll resultPayroll)
+    {
+        return await _provider.Update(resultPayroll);
+    }
 }

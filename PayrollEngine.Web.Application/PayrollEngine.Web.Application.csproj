@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Calcs/" />
     <Folder Include="Normalizers/" />
     <Folder Include="Services/" />
     <Folder Include="Services/Params/" />

@@ -54,4 +54,11 @@ public class ResultPayrollProvider : IResultPayrollProvider
         var result = await _dbContext.PayrollResults.Where(r => r.Month == months).FirstOrDefaultAsync();
         return result;
     }
+
+    public async Task<ResultPayroll> Update(ResultPayroll resultPayroll)
+    {
+        _dbContext.PayrollResults.Update(resultPayroll);
+        await _dbContext.SaveChangesAsync();
+        return resultPayroll;
+    }
 }
