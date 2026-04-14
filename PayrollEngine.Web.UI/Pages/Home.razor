@@ -188,84 +188,134 @@
 
     
     <!-- ═══ BÖLÜM 3: BORDRO SONUÇLARI ═══ -->
-    <!--
-    <div class="pe-card">
-        <div class="pe-card-header results-bg">
-            <div class="d-flex align-items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M0 0h1v15h15v1H0zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07z" />
-                </svg>
-                <span class="fw-semibold">Bordro Sonuçları</span>
-            </div>
-            <div class="d-flex align-items-center gap-2">
-                <a href="@ExportUrl" download="@($"bordro_sonuclari_{_year}.csv")" class="btn btn-outline-success btn-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="me-1" viewBox="0 0 16 16">
-                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
-                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z" />
+    @if (_results.Any())
+    {
+        <div class="pe-card">
+            <div class="pe-card-header results-bg">
+                <div class="d-flex align-items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M0 0h1v15h15v1H0zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07z" />
                     </svg>
-                    İndir
-                </a>
+                    <span class="fw-semibold">Bordro Sonuçları</span>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <a href="@ExportUrl" download="@($"bordro_sonuclari_{_year}.csv")" class="btn btn-outline-success btn-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="me-1" viewBox="0 0 16 16">
+                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
+                            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z" />
+                        </svg>
+                        İndir
+                    </a>
+                </div>
             </div>
-        </div>
-        <div class="pe-card-body p-0">
-            <div class="table-responsive">
-                <table class="table result-table mb-0">
-                    <thead>
-                        <tr>
-                            <th class="col-ay">Ay</th>
-                            <th class="text-end col-money">Brüt Maaş ₺</th>
-                            <th class="text-end col-money">SGK Kesintisi ₺</th>
-                            <th class="text-end col-money">İşsizlik Kes. ₺</th>
-                            <th class="text-end col-money">Gelir Vergisi ₺</th>
-                            <th class="text-end col-money">Damga Vergisi ₺</th>
-                            <th class="text-end col-money">Toplam Kesinti ₺</th>
-                            <th class="text-end col-money col-net">Net Maaş ₺</th>
-                            <th class="text-end col-money">Efektif Vergi %</th>
-                            <th class="text-end col-money">İşveren SGK ₺</th>
-                            <th class="text-end col-money">İşveren İşsizlik ₺</th>
-                            <th class="text-end col-money">Toplam Maliyet ₺</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var r in _results)
-                        {
-                            <tr class="result-data-row">
-                                <td class="text-end"><span class="result-month-pill">@MonthNames[r.Month]</span></td>
-                                <td class="text-end val-net">@r.GrossSalary.ToString("N2")</td>
-                                <td class="text-end val-net">@r.SsiEmployeeDeduction.ToString("N2")</td>
-                                <td class="text-end val-net">@r.UnemploymentEmployeeDeduction.ToString("N2")</td>
-                                <td class="text-end val-net">@r.IncomeTax.ToString("N2")</td>
-                                <td class="text-end val-net">@r.StampTax.ToString("N2")</td>
-                                <td class="text-end val-net">@r.TotalDeductions.ToString("N2")</td>
-                                <td class="text-end val-net">@r.NetSalary.ToString("N2")</td>
-                                <td class="text-end val-neutral">@r.EffectiveTaxRate.ToString("P2")</td>
-                                @{ var ec = _employerContributions.FirstOrDefault(e => e.Month == r.Month); }
-                                <td class="text-end val-net">@(ec?.SsiEmployerShare.ToString("N2") ?? "—")</td>
-                                <td class="text-end val-net">@(ec?.UnemploymentEmployerShare.ToString("N2") ?? "—")</td>
-                                <td class="text-end val-net">@(ec?.TotalCost.ToString("N2") ?? "—")</td>
+            <div class="pe-card-body p-0">
+                <div class="table-responsive">
+                    <table class="table result-table mb-0">
+                        <thead>
+                            <tr>
+                                <th class="col-ay">Ay</th>
+                                <th class="text-end col-money">Temel Ücret</th>
+                                <th class="text-end col-money">FM %50</th>
+                                <th class="text-end col-money">FM %100</th>
+                                <th class="text-end col-money">Prim / İkramiye</th>
+                                
+                                
+                                <th class="text-end col-money">Brüt Maaş</th>
+                                <th class="text-end col-money">SGK Matrahı</th>
+                                <th class="text-end col-money">SGK Kesintisi</th>
+                                <th class="text-end col-money">İşsizlik Kes.</th>
+                                <th class="text-end col-money">GV Matrahı</th>
+                                <th class="text-end col-money">KGV Matrahı</th>
+                                <th class="text-end col-money">Gelir vergisi</th>
+                                <th class="text-end col-money">GV İstisnası</th>
+                                <th class="text-end col-money">Damga Vergisi</th>
+                                <th class="text-end col-money">DV İstisnası</th>
+                                <th class="text-end col-money col-net">Net Maaş</th>
+                                <th class="text-end col-money">İşveren SGK</th>
+                                <th class="text-end col-money">İşveren İşsizlik</th>
+
+                                <th class="text-end col-money">Alışveriş Net</th>
+                                <th class="text-end col-money">Alışveriş Brüt</th>
+
+                                <th class="text-end col-money">Toplam Maliyet</th>
                             </tr>
-                        }
-                    </tbody>
-                    <tfoot>
-                        <tr class="result-total-row">
-                            <td><strong>TOPLAM</strong></td>
-                            <td class="text-end val-net"><strong>@_results.Sum(r => r.GrossSalary).ToString("N2")</strong></td>
-                            <td class="text-end val-net"><strong>@_results.Sum(r => r.SsiEmployeeDeduction).ToString("N2")</strong></td>
-                            <td class="text-end val-net"><strong>@_results.Sum(r => r.UnemploymentEmployeeDeduction).ToString("N2")</strong></td>
-                            <td class="text-end val-net"><strong>@_results.Sum(r => r.IncomeTax).ToString("N2")</strong></td>
-                            <td class="text-end val-net"><strong>@_results.Sum(r => r.StampTax).ToString("N2")</strong></td>
-                            <td class="text-end val-net"><strong>@_results.Sum(r => r.TotalDeductions).ToString("N2")</strong></td>
-                            <td class="text-end val-net"><strong>@_results.Sum(r => r.NetSalary).ToString("N2")</strong></td>
-                            <td class="text-end val-neutral">—</td>
-                            <td class="text-end val-net"><strong>@_employerContributions.Sum(e => e.SsiEmployerShare).ToString("N2")</strong></td>
-                            <td class="text-end val-net"><strong>@_employerContributions.Sum(e => e.UnemploymentEmployerShare).ToString("N2")</strong></td>
-                            <td class="text-end val-net"><strong>@_employerContributions.Sum(e => e.TotalCost).ToString("N2")</strong></td>
-                        </tr>
-                    </tfoot>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var r in _results)
+                            {
+                                
+                                
+                                <tr class="result-data-row">
+                                    <td class="text-end"><span class="result-month-pill">@MonthNames[r.Month]</span></td>
+                                    @if(_salaryType == SalaryType.Gross)
+                                    {
+                                        <td class="text-end val-net">@r.BaseSalary.ToString("N2")</td>
+                                    }
+                                    else
+                                    {   decimal tempNet = r.NetSalary -(r.Overtime_50_Amount + r.Overtime_100_Amount + r.Bonus);
+                                        <td class="text-end val-net"><strong>@tempNet.ToString("N2")</strong></td>
+                                    }
+                                    <td class="text-end val-net">@r.Overtime_50_Amount.ToString("N2")</td>
+                                    <td class="text-end val-net">@r.Overtime_100_Amount.ToString("N2")</td>
+                                    <td class="text-end val-net">@r.Bonus.ToString("N2")</td>
+                                    
+
+                                    <td class="text-end val-net">@r.GrossSalary.ToString("N2")</td>
+                                    <td class="text-end val-net">@r.SSContributionBase.ToString("N2")</td>
+                                    <td class="text-end val-net">@r.EmployeeSSContributionAmount.ToString("N2")</td>
+                                    <td class="text-end val-net">@r.EmployeeUIContributionAmount.ToString("N2")</td>
+                                    <td class="text-end val-net">@r.IncomeTaxBase.ToString("N2")</td>
+                                    <td class="text-end val-net">@r.CumulativeIncomeTaxBase.ToString("N2")</td>
+                                    <td class="text-end val-net">@r.IncomeTax.ToString("N2")</td>
+                                    <td class="text-end val-net">@r.IncomeTaxExemption.ToString("N2")</td>
+                                    <td class="text-end val-net">@r.StampTax.ToString("N2")</td>
+                                    <td class="text-end val-net">@r.StampTaxExemption.ToString("N2")</td>
+                                    <td class="text-end val-net"><strong>@r.NetSalary.ToString("N2")</strong></td>
+                                    <td class="text-end val-net">@r.EmployerSSContributionAmount.ToString("N2")</td>
+                                    <td class="text-end val-net">@r.EmployerUIContributionAmount.ToString("N2")</td>
+
+                                    <td class="text-end val-net">@r.ShoppingVoucherNet.ToString("N2")</td>
+                                    <td class="text-end val-net">@r.ShoppingVoucherGrossAmount.ToString("N2")</td>
+
+
+                                    <td class="text-end val-net">@r.TotalEmployerCost.ToString("N2")</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr class="result-total-row">
+                                <td><strong>TOPLAM</strong></td>
+
+                                <td class="text-end val-net"><strong>@_results.Sum(r => r.BaseSalary).ToString("N2")</strong></td>
+                                <td class="text-end val-net"><strong>@_results.Sum(r => r.Overtime_50_Amount).ToString("N2")</strong></td>
+                                <td class="text-end val-net"><strong>@_results.Sum(r => r.Overtime_100_Amount).ToString("N2")</strong></td>
+                                <td class="text-end val-net"><strong>@_results.Sum(r => r.Bonus).ToString("N2")</strong></td>
+                                
+
+                                <td class="text-end val-net"><strong>@_results.Sum(r => r.GrossSalary).ToString("N2")</strong></td>
+                                <td class="text-end val-net"><strong>@_results.Sum(r => r.SSContributionBase).ToString("N2")</strong></td>
+                                <td class="text-end val-net"><strong>@_results.Sum(r => r.EmployeeSSContributionAmount).ToString("N2")</strong></td>
+                                <td class="text-end val-net"><strong>@_results.Sum(r => r.EmployeeUIContributionAmount).ToString("N2")</strong></td>
+                                <td class="text-end val-net"><strong>@_results.Sum(r => r.IncomeTaxBase).ToString("N2")</strong></td>
+                                <td class="text-end val-net"><strong>0</strong></td>
+                                <td class="text-end val-net"><strong>@_results.Sum(r => r.IncomeTax).ToString("N2")</strong></td>
+                                <td class="text-end val-net"><strong>@_results.Sum(r => r.IncomeTaxExemption).ToString("N2")</strong></td>
+                                <td class="text-end val-net"><strong>@_results.Sum(r => r.StampTax).ToString("N2")</strong></td>
+                                <td class="text-end val-net"><strong>@_results.Sum(r => r.StampTaxExemption).ToString("N2")</strong></td>
+                                <td class="text-end val-net"><strong>@_results.Sum(r => r.NetSalary).ToString("N2")</strong></td>
+                                <td class="text-end val-net"><strong>@_results.Sum(r => r.EmployerSSContributionAmount).ToString("N2")</strong></td>
+                                <td class="text-end val-net"><strong>@_results.Sum(r => r.EmployerUIContributionAmount).ToString("N2")</strong></td>
+
+                                <td class="text-end val-net"><strong>@_results.Sum(r => r.ShoppingVoucherNet).ToString("N2")</strong></td>
+                                <td class="text-end val-net"><strong>@_results.Sum(r => r.ShoppingVoucherGrossAmount).ToString("N2")</strong></td>
+
+                                <td class="text-end val-net"><strong>@_results.Sum(r => r.TotalEmployerCost).ToString("N2")</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
--->
+    }
 </div>
 

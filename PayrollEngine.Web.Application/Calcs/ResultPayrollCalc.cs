@@ -57,6 +57,8 @@ public class ResultPayrollCalc
     {
         var scenario = await _scenarioService.Get();
 
+       
+
         decimal baseSalary = month.BaseSalary;
         decimal overtime_50_amount = month.Overtime_50_Amount;
         decimal overtime_100_amount = month.Overtime_100_Amount;
@@ -66,7 +68,7 @@ public class ResultPayrollCalc
         ResultPayroll result = new ResultPayroll();
         result.Month = month.Month;
         result.WorkDays = month.WorkDays;
-        result.BaseSalary = baseSalary;
+        result.BaseSalary = month.BaseSalary;
         result.Overtime_50_Amount = overtime_50_amount;
         result.Overtime_100_Amount = overtime_100_amount;
         result.Bonus = bonus;
@@ -147,7 +149,8 @@ public class ResultPayrollCalc
 
 
             if (Math.Abs(difference) < 0.01m)
-            {
+            {   
+                
                 break;
             }
             else
@@ -158,6 +161,7 @@ public class ResultPayrollCalc
            
         }
 
+        
         
         return calculatedResult;
     }

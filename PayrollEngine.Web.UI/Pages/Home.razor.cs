@@ -42,11 +42,8 @@ public partial class Home : ComponentBase
         { Months.December,  "Aralık"  }
     };
 
-//     // ── Veri listeleri ────────────────────────────────────────────────────
-//     private List<ResultPayroll> _results = new();
-//     private List<EmployerContributions> _employerContributions = new();
-
-
+    // ── Veri listeleri ────────────────────────────────────────────────────
+    private List<ResultPayroll> _results = new();
 
     private List<PayrollTemplateMonth> _templateMonths = InitializeMonths();
 
@@ -157,13 +154,14 @@ public partial class Home : ComponentBase
         _payrollMonthMessage = string.Empty;
         StateHasChanged();
 
-
-
+        // Hesaplanan verileri yükle
+        await LoadResults();
     }
 
     private async Task ClearMonths()
     {
         _templateMonths = InitializeMonths();
+        _results = new();
         _payrollMonthMessage = "Aylık veriler temizlendi.";
         StateHasChanged(); 
         await Task.Delay(3000);
@@ -203,6 +201,8 @@ public partial class Home : ComponentBase
 
         var Scenario = await Http.GetFromJsonAsync<Scenario>("api/scenario");
 
+        if (Scenario == null) return;
+
         if(newPayType == PayType.Monthly)
         {
             foreach(var month in _templateMonths)
@@ -227,13 +227,17 @@ public partial class Home : ComponentBase
 
 
     private bool ShowWarning = false;
-    private string WarningMessage;
+    private string WarningMessage = string.Empty;
 
     private async Task CheckSalary(int idx)
     {   
         var scenario = await Http.GetFromJsonAsync<Scenario>("api/scenario");
         
+        if (scenario == null) return;
+        
         var minimumWage = await Http.GetFromJsonAsync<MinimumWage>($"api/minimumwage?year={scenario.Year}");
+        
+        if (minimumWage == null) return;
         
         if (scenario.Status == Status.Active && scenario.SalaryType == SalaryType.Net && _templateMonths[idx].BaseSalary < minimumWage.NetSalary)
         {
@@ -264,7 +268,31 @@ public partial class Home : ComponentBase
         StateHasChanged();
     }
 
+    // ── Bordro Sonuçlarını Yükle ─────────────────────────────────────────
+    private async Task LoadResults()
+    {
+        try
+        {
+            var response = await Http.GetAsync("api/resultpayroll");
+            
+            if (response.IsSuccessStatusCode)
+            {
+                _results = await response.Content.ReadFromJsonAsync<List<ResultPayroll>>() ?? new();
+                StateHasChanged();
+            }
+            else
+            {
+                _results = new();
+            }
+        }
+        catch
+        {
+            _results = new();
+        }
+    }
 
-
+    // ── Computed Properties ───────────────────────────────────────────────
+    private string ExportUrl => $"api/resultpayroll/export?year={_year}";
 
 }
+
