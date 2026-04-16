@@ -9,7 +9,7 @@ public class Scenario
     public int Year { get; set; }
     public SalaryType SalaryType { get; set; }
     public Status Status { get; set; }
-    public Degree DisabilityDegree { get; set; }
+    public DisabilityDegree DisabilityDegree { get; set; }
     public PayType PayType { get; set; }
     public Sector Sector { get; set; }
     public IncentiveType IncentiveType { get; set; }

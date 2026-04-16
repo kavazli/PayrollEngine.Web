@@ -1,6 +1,6 @@
 namespace PayrollEngine.Web.Domain.Enums;
 
-public enum Degree
+public enum DisabilityDegree
 {
     Normal = 0,
     BirinciDerece = 1,

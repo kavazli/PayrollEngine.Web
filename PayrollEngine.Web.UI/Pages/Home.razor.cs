@@ -16,7 +16,7 @@ public partial class Home : ComponentBase
     private int _year = 2026;
     private SalaryType _salaryType = SalaryType.Gross;
     private Status _status = Status.Active;
-    private Degree _disabilityDegree = Degree.Normal;
+    private DisabilityDegree _disabilityDegree = DisabilityDegree.Normal;
     private PayType _payType = PayType.Monthly;
     private Sector _sector = Sector.Manufacturing;
     private IncentiveType _incentiveType = IncentiveType.None;

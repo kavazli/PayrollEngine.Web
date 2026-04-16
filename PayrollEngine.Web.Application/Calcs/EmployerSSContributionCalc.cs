@@ -32,6 +32,11 @@ public class EmployerSSContributionCalc
         decimal employerSSAmount = 0;
 
 
+        if(ssContributionBase < minWage.GrossSalary)
+        {
+            ssContributionBase = minWage.GrossSalary;
+        }
+
         if(status == Status.Retired)
         {
             employerSSAmount = Math.Round(SgdpCalc(ssContributionBase, ssParams.RetiredEmployerSSRate), 2);

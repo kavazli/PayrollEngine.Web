@@ -80,7 +80,7 @@ public class ResultPayrollCalc
         decimal SSContributionBase = await _ssContributionBaseCalc.Calc(scenario.Year, grossSalary);
         decimal employeeSSContributionAmount = await _employeeSSContributionCalc.Calc(scenario.Year, scenario.Status, SSContributionBase);
         decimal employeeUIContributionAmount = await _employeeUIContributionCalc.Calc(scenario.Year, scenario.Status, SSContributionBase);
-        decimal incomeTaxBase = _incomeTaxBaseCalc.Calc(grossSalary, employeeSSContributionAmount, employeeUIContributionAmount);
+        decimal incomeTaxBase = await _incomeTaxBaseCalc.Calc(grossSalary, scenario.Year, scenario.DisabilityDegree, employeeSSContributionAmount, employeeUIContributionAmount);
         decimal cumulativeIncomeTaxBase = await _cumulativeIncomeTaxBaseCalc.Calc(month.Month, incomeTaxBase);
         var taxRate = await _incomeTaxCalc.Calc(scenario.Year, cumulativeIncomeTaxBase, incomeTaxBase);
         decimal incometaxExemption = await _incomeTaxExemptionCalc.Calc(scenario.Year, month.Month);

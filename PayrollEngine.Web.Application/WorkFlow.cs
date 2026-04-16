@@ -104,7 +104,7 @@ public class WorkFlow
         foreach (var item in resultPayroll)
         {
            decimal SSresult = await _employerSSContributionCalc.Calc(year, status, incentiveType, sector, item.SSContributionBase);
-           decimal UIresult = await _employerUIContributionCalc.Calc(year, item.SSContributionBase);
+           decimal UIresult = await _employerUIContributionCalc.Calc(year, status, item.SSContributionBase);
            item.EmployerSSContributionAmount = SSresult;
            item.EmployerUIContributionAmount = UIresult;
 
