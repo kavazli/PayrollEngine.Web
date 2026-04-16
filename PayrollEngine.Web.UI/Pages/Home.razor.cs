@@ -116,9 +116,9 @@ public partial class Home : ComponentBase
         {
             _payrollMonthMessage = "Aylık veriler başarıyla kaydedildi.";
             StateHasChanged(); // UI'ı güncelle
-            await Task.Delay(3000); 
+            await Task.Delay(1000); 
             
-            // Mesajı 3 saniye gösterdikten sonra temizle
+            // Mesajı 1 saniye gösterdikten sonra temizle
             _payrollMonthMessage = string.Empty;
             StateHasChanged(); // UI'ı tekrar güncelle
         }
@@ -150,7 +150,7 @@ public partial class Home : ComponentBase
 
         _payrollMonthMessage = "Maaş hesaplamaları başarıyla tamamlandı!";
         StateHasChanged();
-        await Task.Delay(3000);
+        await Task.Delay(1000);
         _payrollMonthMessage = string.Empty;
         StateHasChanged();
 
