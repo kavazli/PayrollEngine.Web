@@ -45,8 +45,6 @@ bld/
 # Node modules
 node_modules/
 
-# WWW root (build output)
-wwwroot/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
