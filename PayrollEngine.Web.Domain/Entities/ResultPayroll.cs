@@ -20,6 +20,7 @@ public class ResultPayroll
     public decimal EmployeeSSContributionAmount { get; set; }
     public decimal EmployeeUIContributionAmount { get; set; }
     public decimal IncomeTaxBase { get; set; }
+    public decimal ReducedIncomeTaxBase { get; set; }
     public decimal CumulativeIncomeTaxBase { get; set; }
     public decimal IncomeTax { get; set; }
     public decimal IncomeTaxRate { get; set; }

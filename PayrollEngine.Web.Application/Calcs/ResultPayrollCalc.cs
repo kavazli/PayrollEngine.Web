@@ -80,9 +80,10 @@ public class ResultPayrollCalc
         decimal SSContributionBase = await _ssContributionBaseCalc.Calc(scenario.Year, grossSalary);
         decimal employeeSSContributionAmount = await _employeeSSContributionCalc.Calc(scenario.Year, scenario.Status, SSContributionBase);
         decimal employeeUIContributionAmount = await _employeeUIContributionCalc.Calc(scenario.Year, scenario.Status, SSContributionBase);
-        decimal incomeTaxBase = await _incomeTaxBaseCalc.Calc(grossSalary, scenario.Year, scenario.DisabilityDegree, employeeSSContributionAmount, employeeUIContributionAmount);
-        decimal cumulativeIncomeTaxBase = await _cumulativeIncomeTaxBaseCalc.Calc(month.Month, incomeTaxBase);
-        var taxRate = await _incomeTaxCalc.Calc(scenario.Year, cumulativeIncomeTaxBase, incomeTaxBase);
+        decimal incomeTaxBase = _incomeTaxBaseCalc.CalcNormal(grossSalary, employeeSSContributionAmount, employeeUIContributionAmount);
+        decimal reducedIncomeTaxBase = await _incomeTaxBaseCalc.Calc(grossSalary, scenario.Year, scenario.DisabilityDegree, employeeSSContributionAmount, employeeUIContributionAmount);
+        decimal cumulativeIncomeTaxBase = await _cumulativeIncomeTaxBaseCalc.Calc(month.Month, reducedIncomeTaxBase);
+        var taxRate = await _incomeTaxCalc.Calc(scenario.Year, cumulativeIncomeTaxBase, reducedIncomeTaxBase);
         decimal incometaxExemption = await _incomeTaxExemptionCalc.Calc(scenario.Year, month.Month);
         
         decimal incomeTax = Math.Max(0, taxRate.tax - incometaxExemption);
@@ -96,6 +97,7 @@ public class ResultPayrollCalc
         result.EmployeeSSContributionAmount = employeeSSContributionAmount;
         result.EmployeeUIContributionAmount = employeeUIContributionAmount;
         result.IncomeTaxBase = incomeTaxBase;
+        result.ReducedIncomeTaxBase = reducedIncomeTaxBase;
         result.CumulativeIncomeTaxBase = cumulativeIncomeTaxBase;
         result.IncomeTax = incomeTax;
         result.IncomeTaxExemption = incometaxExemption;
@@ -127,6 +129,7 @@ public class ResultPayrollCalc
     {   
         decimal targetNetSalary = month.BaseSalary + month.Overtime_50_Amount + month.Overtime_100_Amount + month.Bonus;
         decimal difference = 0;
+        decimal extraNet = 0;
         
         PayrollMonth TempResult = new PayrollMonth
         {
@@ -144,7 +147,17 @@ public class ResultPayrollCalc
         {
             calculatedResult = await Calc(TempResult);
 
-            decimal calculatedNetSalary = calculatedResult.NetSalary;
+
+            if(calculatedResult.IncomeTaxBase - calculatedResult.ReducedIncomeTaxBase > 0)
+            {
+                extraNet = (calculatedResult.IncomeTaxBase - calculatedResult.ReducedIncomeTaxBase) * calculatedResult.IncomeTaxRate;
+            }
+            else
+            {
+                extraNet = 0;
+            }
+
+            decimal calculatedNetSalary = calculatedResult.NetSalary - extraNet;
             difference = targetNetSalary - calculatedNetSalary;
 
 
