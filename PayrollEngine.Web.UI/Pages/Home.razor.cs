@@ -1,4 +1,5 @@
 using System.Net.Http.Json;
+using System.Text;
 using Microsoft.AspNetCore.Components;
 using PayrollEngine.Web.Domain.Entities;
 using PayrollEngine.Web.Domain.Enums;
@@ -291,8 +292,11 @@ public partial class Home : ComponentBase
         }
     }
 
-    // ── Computed Properties ───────────────────────────────────────────────
-    private string ExportUrl => $"api/resultpayroll/export?year={_year}";
 
+  
 }
+
+
+
+
 

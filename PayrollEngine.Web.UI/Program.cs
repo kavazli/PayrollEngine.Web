@@ -14,7 +14,9 @@ CultureInfo.DefaultThreadCurrentUICulture = culture;
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5032") });
+// API Base URL - Docker veya local ortam için
+var apiBaseUrl = builder.Configuration.GetValue<string>("ApiBaseUrl") ?? "http://localhost:5032";
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(apiBaseUrl) });
 
 // Logging ekle
 builder.Logging.SetMinimumLevel(LogLevel.Debug);

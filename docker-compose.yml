@@ -1,0 +1,39 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: PayrollEngine.Web.API/Dockerfile
+    container_name: payroll-api
+    init: true
+    ports:
+      - "5032:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Data Source=/app/data/payroll.db
+    volumes:
+      - ./data:/app/data
+    networks:
+      - payroll-network
+    restart: always
+
+  ui:
+    build:
+      context: .
+      dockerfile: PayrollEngine.Web.UI/Dockerfile
+    container_name: payroll-ui
+    init: true
+    ports:
+      - "5033:80"
+    depends_on:
+      - api
+    networks:
+      - payroll-network
+    restart: always
+
+networks:
+  payroll-network:
+    driver: bridge
+
+volumes:
+  data:

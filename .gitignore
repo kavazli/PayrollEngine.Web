@@ -165,3 +165,9 @@ $tf/
 
 # macOS
 .DS_Store
+
+# Docker data
+data/
+*.db
+*.db-shm
+*.db-wal
